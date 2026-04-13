@@ -63,7 +63,7 @@ def remove_student(students: dict, student_id: str) -> dict:
         {}
     """
     if student_id not in students:
-        print(f"❌ Student {student_id} not found.")
+        print(f"🔍 Student {student_id} not found.")
         return students
     
     del students[student_id]
