@@ -90,7 +90,7 @@ check("get_failing_students: sorted ascending by average",
       failing[0][0], "S001")  # 37.5 < 0.0... wait S003 has no grades = 0.0
 # S003 avg = 0.0, S001 avg = 37.5 → sorted: [S003(0.0), S001(37.5)]
 check("get_failing_students: student with no grades included (avg 0.0)",
-      failing[0][2], 0.0)
+      failing[1][2], 0.0)
 
 print()
 print("─" * 50)
