@@ -10,6 +10,14 @@
 
 
 def add_student(students: dict, name: str, student_id: str) -> dict:
+    if student_id in students:
+        print(f"Student {student_id} already exists.")
+        return students
+    
+    cleaned_name = name.strip().title()
+    students[student_id] = {"name": cleaned_name, "id": student_id}
+    print(f"👍 Student {student_id} successfully added")
+    return students
     """
     Add a new student to the students dictionary.
 
@@ -37,6 +45,16 @@ def add_student(students: dict, name: str, student_id: str) -> dict:
 
 
 def remove_student(students: dict, student_id: str) -> dict:
+    if student_id not in students:
+        print(f"❌ Student with id {student_id} not found.")
+    try:
+        del students[student_id]
+        print(f"🗑️ Student {student_id} successfully removed")
+    except Exception as e:
+        print(f"❌ Student with id {student_id} not found.")
+
+    
+    return students
     """
     Remove a student from the students dictionary by their ID.
 
@@ -61,6 +79,15 @@ def remove_student(students: dict, student_id: str) -> dict:
 
 
 def find_student(students: dict, name: str) -> list:
+    if not students:
+        return []
+    
+    if not name:
+        raise ValueError("Search name cannot be empty.")
+    
+    name_lower = name.lower()
+    matches = [student for student in students.values() if name_lower in student["name"].lower()]
+    return matches
     """
     Search for students whose name contains the given string (case-insensitive).
 
