@@ -1,4 +1,4 @@
-# 📚 GradeBook — Team Python & Git Exercise
+# 📚 GradeBook — Team Python & Git Exercises
 
 A simple student grade management system to build together as a team.
 
