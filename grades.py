@@ -9,8 +9,12 @@
 #   "S002": {"Math": 60, "English": 55},
 # }
 
+mock_grade = {
+   "S001": {"Math": 85, "English": 90, "Science": 78},
+   "S002": {"Math": 60, "English": 55},
+}
 
-def add_grade(grades: dict, student_id: str, subject: str, score: int) -> dict:
+def add_grade(grades: dict, student_id: str, subject: str, score: int) -> dict|None:
     """
     Add or update a grade for a student in a given subject.
 
@@ -31,13 +35,29 @@ def add_grade(grades: dict, student_id: str, subject: str, score: int) -> dict:
 
     Example:
         >>> db = {}
-        >>> add_grade(db, "S001", "Math", 85)
+        >>> _ = add_grade(db, "S001", "Math", 85)
         >>> db
-        {"S001": {"Math": 85}}
+        {'S001': {'Math': 85}}
     """
-    # TODO: implement this function
-    raise NotImplementedError("add_grade is not implemented yet.")
+    # Return nothing if grade is empty
+    if grades == {}:
+        pass
+        # return None
+    # Check is student exist
+    if student_id not in grades:
+        grades[student_id] = {}
 
+    # Check score validity
+    if 0 <= score <= 100:
+        pass
+    else:
+        print(f"Invalid score: {score}. Score must be between 0 and 100.")
+        return grades
+
+    # Update student entry
+    grades[student_id].update({subject: score})
+
+    return grades
 
 def get_average(grades: dict, student_id: str) -> float:
     """
@@ -60,9 +80,18 @@ def get_average(grades: dict, student_id: str) -> float:
         >>> get_average(db, "S999")
         0.0
     """
-    # TODO: implement this function
-    raise NotImplementedError("get_average is not implemented yet.")
+    if student_id not in grades:
+        return 0.0
 
+    if grades[student_id] == {}:
+        return 0.0
+
+    sum = 0
+    for subject,score in grades[student_id].items():
+        sum += score
+    average = round(sum / len(grades[student_id]),2)
+
+    return average
 
 def get_subjects(grades: dict) -> set:
     """
@@ -85,9 +114,13 @@ def get_subjects(grades: dict) -> set:
         >>> get_subjects(db)
         {"Math", "English", "Science"}
     """
-    # TODO: implement this function
-    raise NotImplementedError("get_subjects is not implemented yet.")
+    subjects = set()
 
+    for student_id in grades:
+        for subject in grades[student_id]:
+            subjects.add(subject)
+
+    return subjects
 
 def get_failing_students(students: dict, grades: dict, threshold: int = 50) -> list:
     """
@@ -113,5 +146,14 @@ def get_failing_students(students: dict, grades: dict, threshold: int = 50) -> l
         >>> get_failing_students(students, grades)
         [("S001", "Alice", 40.0)]
     """
-    # TODO: implement this function
-    raise NotImplementedError("get_failing_students is not implemented yet.")
+
+    students_failing = []
+
+    for student_id in students:
+        student_average_score = get_average(grades, student_id)
+        if student_average_score < 50:
+            student_name = students[student_id]["name"]
+            students_failing.append(tuple([student_id, student_name,student_average_score]))
+
+    students_failing.sort(key=lambda tup: tup[1])
+    return students_failing
