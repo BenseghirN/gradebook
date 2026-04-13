@@ -8,15 +8,14 @@
 #   "S002": {"name": "Bob",   "id": "S002"},
 # }
 
-
 def add_student(students: dict, name: str, student_id: str) -> dict:
     """
     Add a new student to the students dictionary.
 
     - If student_id already exists, do NOT overwrite it.
-      Print a warning message instead: "Student S001 already exists."
+        Print a warning message instead: "Student S001 already exists."
     - Student names should be stored with stripped whitespace and title case.
-      Example: "  alice smith  " → "Alice Smith"
+        Example: "  alice smith  " → "Alice Smith"
 
     Args:
         students (dict): the current students database
@@ -32,9 +31,16 @@ def add_student(students: dict, name: str, student_id: str) -> dict:
         >>> db
         {"S001": {"name": "Alice", "id": "S001"}}
     """
-    # TODO: implement this function
-    raise NotImplementedError("add_student is not implemented yet.")
 
+    if student_id in students:
+        print(f"Student {student_id} already exists.")
+        return students
+    
+    cleaned_name = name.strip().title()
+    students[student_id] = {"name": cleaned_name, "id": student_id}
+    print(f"👍 Student {student_id} successfully added")
+    
+    return students
 
 def remove_student(students: dict, student_id: str) -> dict:
     """
@@ -56,8 +62,14 @@ def remove_student(students: dict, student_id: str) -> dict:
         >>> db
         {}
     """
-    # TODO: implement this function
-    raise NotImplementedError("remove_student is not implemented yet.")
+    if student_id not in students:
+        print(f"❌ Student {student_id} not found.")
+        return students
+    
+    del students[student_id]
+    print(f"🗑️ Student {student_id} successfully removed")
+    
+    return students
 
 
 def find_student(students: dict, name: str) -> list:
@@ -84,6 +96,6 @@ def find_student(students: dict, name: str) -> list:
         [{"name": "Alice Smith", "id": "S001"}]
         >>> find_student(db, "xyz")
         []
-    """
-    # TODO: implement this function
-    raise NotImplementedError("find_student is not implemented yet.")
+    """    
+    name_lower = name.lower()
+    return [student for student in students.values() if name_lower in student["name"].lower()]
