@@ -151,7 +151,7 @@ def get_failing_students(students: dict, grades: dict, threshold: int = 50) -> l
 
     for student_id in students:
         student_average_score = get_average(grades, student_id)
-        if student_average_score < 50:
+        if student_average_score < threshold:
             student_name = students[student_id]["name"]
             students_failing.append(tuple([student_id, student_name,student_average_score]))
 
