@@ -59,7 +59,6 @@ def add_grade(grades: dict, student_id: str, subject: str, score: int) -> dict|N
 
     return grades
 
-
 def get_average(grades: dict, student_id: str) -> float:
     """
     Calculate the average score of a student across all their subjects.
